@@ -54,20 +54,23 @@
   </macro>
   <macro name="access">
     <choose>
-      <if type="article article-journal article-magazine" match="none">
+      <if variable="URL DOI" match="any">
+        <group prefix=" [" suffix="]. ">
+          <text term="accessed" text-case="capitalize-first" suffix=" "/>
+          <date variable="accessed">
+            <date-part name="day" suffix=" "/>
+            <date-part name="month" suffix=" "/>
+            <date-part name="year"/>
+          </date>
+        </group>
+        <text value="Available from:" suffix=" "/>
         <choose>
-          <if variable="URL">
-            <group prefix=" [" suffix="]. ">
-              <text term="accessed" text-case="capitalize-first" suffix=" "/>
-              <date variable="accessed">
-                <date-part name="day" suffix=" "/>
-                <date-part name="month" suffix=" "/>
-                <date-part name="year"/>
-              </date>
-            </group>
-            <text value="Available from:" suffix=" "/>
-            <text variable="URL"/>
+          <if match="all" variable="DOI">
+            <text variable="DOI" prefix="https://doi.org/"/>
           </if>
+          <else>
+            <text variable="URL"/>
+          </else>
         </choose>
       </if>
     </choose>
